@@ -1,0 +1,17 @@
+game.png
+size:2048,2048
+repeat:none
+arbol1
+bounds:972,289,255,319
+badlogic
+bounds:2,2,256,256
+bucket
+bounds:1229,544,64,64
+drop
+bounds:1551,1124,64,64
+link
+bounds:972,610,577,578
+linksprite
+bounds:2,260,968,928
+title
+bounds:2,1190,2000,816

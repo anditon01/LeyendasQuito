@@ -1,0 +1,57 @@
+{
+    "activeFile": "tiles/almeida.tmx",
+    "expandedProjectPaths": [
+        "Pixel Art Top Down - Basic",
+        ".",
+        "tiles"
+    ],
+    "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "Medieval_Castle_Asset_Pack/Iglesia.tsx": {
+            "scaleInDock": 1
+        },
+        "Pixel Art Top Down - Basic/TX Tileset Stone Ground.tsx": {
+            "scaleInDock": 1
+        },
+        "Pixel Art Top Down - Basic/plaza.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tiles/almeida.tmx": {
+            "scale": 0.9184319833852543,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 481.7994233704562,
+                "y": 320.1108033240997
+            }
+        },
+        "tiles/almeida.tmx#iglesia": {
+            "scaleInDock": 1
+        },
+        "tiles/almeida.tmx#plaza": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "tiles/cantunia.tmx": {
+            "scale": 1.8426041666666666,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 380.71117643733396,
+                "y": 243.67686132624797
+            }
+        }
+    },
+    "openFiles": [
+        "tiles/almeida.tmx",
+        "tiles/cantunia.tmx",
+        "Pixel Art Top Down - Basic/plaza.tsx"
+    ],
+    "project": "Tilesmap.tiled-project",
+    "recentFiles": [
+        "Pixel Art Top Down - Basic/plaza.tsx",
+        "tiles/cantunia.tmx",
+        "tiles/almeida.tmx"
+    ]
+}
