@@ -3,6 +3,7 @@ package com.uce.leyendasquito.estados;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,12 +16,11 @@ import com.uce.leyendasquito.utils.AudioManager;
 import com.uce.leyendasquito.ventanas.MyGame;
 
 public class MenuState implements GameState {
+	
 	private MyGame game;
 	private Stage stg;
-	Skin skin;
+	private Skin skin;
 	private Music titleTheme;
-	private static MenuState instance;
-
 	
 	public MenuState(MyGame game) {
 		this.game = game;
@@ -51,22 +51,21 @@ public class MenuState implements GameState {
 
 		stg.addActor(table);
 
-		TextButton newGame = new TextButton("New Game", skin);
-		TextButton preferences = new TextButton("Preferences", skin);
-		TextButton exit = new TextButton("Exit", skin);
+		TextButton start = new TextButton("Iniciar", skin);
+		TextButton preferences = new TextButton("Configuracion", skin);
+		TextButton exit = new TextButton("Salir", skin);
 
-		table.add(newGame).fill();
+		table.add(start).fill();
 		table.row().pad(10, 0, 10, 0);
 		table.add(preferences);
 		table.row();
 		table.add(exit).fillX().uniformX();
 
-		newGame.addListener(new ChangeListener() {
+		start.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
-				StateManager.getInstance().changeState(new PlazaState(game));
+				StateManager.getInstance().changeState(new PartidasState(game));
 				// parent.changeScreen(Box2DTutorial.APPLICATION);
-				 titleTheme.stop();
 			}
 		});
 
@@ -105,6 +104,24 @@ public class MenuState implements GameState {
 	public void resize(int width, int height) {
 		stg.getViewport().update(width, height, true);
 
+	}
+
+	@Override
+	public String getLevelName() {
+		// TODO Auto-generated method stub
+		return "Menu";
+	}
+
+	@Override
+	public Vector2 getPlayerPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlayerPosition(float x, float y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="4acf5f62-3572-4a99-a571-c2bd2a65630c" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.5/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.buildship.core.prefs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/tilesmap/iglesiatmx.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/tilesmap/iglesiatmx.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/tilesmap/plaza.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/tilesmap/plaza.tmx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/tilesmap/stone.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/assets/tilesmap/stone.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/com/uce/leyendasquito/estados/AlmeidaState.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/com/uce/leyendasquito/estados/AlmeidaState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/.project" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/.project" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/desktop/bin/main/tilesmap/prueba.tiled-session" beforeDir="false" afterPath="$PROJECT_DIR$/desktop/bin/main/tilesmap/prueba.tiled-session" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2jsuPKU4ymw3kqVXdvrtRlbG5zs" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.LeyendasQuito:desktop [:desktop:DesktopLauncher.main()].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/USUARIO/Documents/GitHub/LeyendasQuito"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="4acf5f62-3572-4a99-a571-c2bd2a65630c" name="Changes" comment="" />
+      <created>1722188079749</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1722188079749</updated>
+    </task>
+    <servers />
+  </component>
+</project>

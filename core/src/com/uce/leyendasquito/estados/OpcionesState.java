@@ -2,6 +2,7 @@ package com.uce.leyendasquito.estados;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -52,7 +53,6 @@ public class OpcionesState implements GameState {
 		resolutionSelectBox.setItems("1280x720", "1920x1080", "800x600");
 
 		String resolution = Gdx.graphics.getWidth() + "x" + Gdx.graphics.getHeight();
-		//System.out.println(resolution);
 		resolutionSelectBox.setSelected(resolution);
 		resolutionSelectBox.addListener(new ChangeListener() {
 			@Override
@@ -61,71 +61,56 @@ public class OpcionesState implements GameState {
 				String[] dimensions = selected.split("x");
 				int width = Integer.parseInt(dimensions[0]);
 				int height = Integer.parseInt(dimensions[1]);
-				// parent.resize(width, height);
-				Gdx.graphics.setWindowedMode(width, height);
+				AppPreferences.getInstance().saveResolution(width, height);
+				Gdx.graphics.setWindowedMode(width, height);		
 			}
 		});
 
 		final Slider volumeMusicSlider = new Slider(0f, 2f, 0.1f, false, skin);
 		 volumeMusicSlider.setValue(AppPreferences.getInstance().getMusicVolume());
-		// volumeMusicSlider.setValue(parent.getPreferences().getMusicVolume());
 		volumeMusicSlider.addListener(event -> {
 			if (volumeMusicSlider.isDragging()) {
 				float volume = volumeMusicSlider.getValue();
-				 AudioManager.getInstance().setMusicVolume(volume);
-				// parent.getPreferences().setMusicVolume(volume);
+				//AppPreferences.getInstance().setMusicVolume(volume);
+				AudioManager.getInstance().setMusicVolume(volume);
 			}
 			return true;
 		});
 
 		final Slider volumeSoundSlider = new Slider(0f, 1f, 0.1f, false, skin);
 		 volumeSoundSlider.setValue(AppPreferences.getInstance().getSoundVolume());
-		// volumeSoundSlider.setValue(parent.getPreferences().getSoundVolume());
 		volumeSoundSlider.addListener(event -> {
 			if (volumeSoundSlider.isDragging() || volumeSoundSlider.isTouchable()) {
 				float volume = volumeSoundSlider.getValue();
 				 AppPreferences.getInstance().setSoundVolume(volume);
-
-				// AudioManager.getInstance().setMusicVolume(volume);
 			}
 			return true;
 		});
 
-		final TextButton backButton = new TextButton("Back", skin, "default");
+		final TextButton backButton = new TextButton("Regresar", skin, "default");
 		backButton.addListener(new ChangeListener() {
 			@Override
 			public void changed(ChangeEvent event, Actor actor) {
 				StateManager.getInstance().revertToPreviousState();
-				
-//				if (parent.getMainScreen() != null) {
-//					parent.changeScreen(Box2DTutorial.PAUSE);
-//				} else {
-//					parent.changeScreen(Box2DTutorial.MENU);
-//				}
-
 			}
 		});
-		titleLabel = new Label("Preferences", skin);
-		volumeMusicLabel = new Label("Music Volume", skin);
-		resolutionLabel = new Label("Resolution", skin);
-		musicOnOffLabel = new Label("Sound Volume", skin);
-		soundOnOffLabel = new Label("Sound Effect", skin);
+		
+		titleLabel = new Label("Preferencias", skin);
+		volumeMusicLabel = new Label("Volumen Musica", skin);
+		resolutionLabel = new Label("Resolucion de Pantalla", skin);
+		musicOnOffLabel = new Label("Volumen Sonidos", skin);
 
 		table.add(titleLabel).colspan(2);
 		table.row().pad(10, 0, 0, 10);
 		table.add(volumeMusicLabel);
 		table.add(volumeMusicSlider).fill();
-		// table.add(volumeSoundLabel);
-		// table.add(musiCheckBox);
 		table.row().pad(10, 0, 0, 10);
 		table.add(musicOnOffLabel);
 		table.add(volumeSoundSlider).fill();
 		table.row();
 		table.add(resolutionLabel);
 		table.add(resolutionSelectBox);
-		// table.add(soundEffectsCheckBox);
 		table.row().pad(10, 0, 0, 10);
-		// table.add(saveButton).colspan(2);
 		table.row().pad(10, 0, 0, 10);
 		table.add(backButton);
 	}
@@ -149,6 +134,24 @@ public class OpcionesState implements GameState {
 	@Override
 	public void resize(int width, int height) {
 		stg.getViewport().update(width, height, true);
+	}
+
+	@Override
+	public String getLevelName() {
+		// TODO Auto-generated method stub
+		return "Opciones";
+	}
+
+	@Override
+	public Vector2 getPlayerPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlayerPosition(float x, float y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

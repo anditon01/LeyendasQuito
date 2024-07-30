@@ -8,7 +8,9 @@ public class AppPreferences {
 	private static final String PREF_MUSIC_ENABLED = "music.enabled";
 	private static final String PREF_SOUND_ENABLED = "sound.enabled";
 	private static final String PREF_SOUND_VOL = "sound";
-	private static final String PREFS_NAME = "b2dtut";
+	private static final String PREFS_NAME = "configuracion";
+	private static final String RESOLUTION_WIDTH_KEY = "resolution_width";
+    private static final String RESOLUTION_HEIGHT_KEY = "resolution_height";
 	//
     private static AppPreferences instance;
 
@@ -24,7 +26,19 @@ public class AppPreferences {
 	protected Preferences getPrefs() {
 		return Gdx.app.getPreferences(PREFS_NAME);
 	}
- 
+	public void saveResolution(int width, int height) {
+        getPrefs().putInteger(RESOLUTION_WIDTH_KEY, width);
+        getPrefs().putInteger(RESOLUTION_HEIGHT_KEY, height);
+        getPrefs().flush();
+    }
+
+    public int getResolutionWidth() {
+        return getPrefs().getInteger(RESOLUTION_WIDTH_KEY, 640); // Valor por defecto
+    }
+
+    public int getResolutionHeight() {
+        return getPrefs().getInteger(RESOLUTION_WIDTH_KEY, 800); // Valor por defecto
+    }
 	public boolean isSoundEffectsEnabled() {
 		return getPrefs().getBoolean(PREF_SOUND_ENABLED, true);
 	}

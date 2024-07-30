@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -55,35 +56,29 @@ public class AlmeidaState implements GameState {
 	private Label messageLabel;
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer mapRenderer;
-	  private float PPM = 100;
-	  
+	private float PPM = 100;
+	private float mapWidth, mapHeight;
+
 	public AlmeidaState(MyGame game) {
 
-		world = new World(new Vector2(0, -20f), true);
+		world = new World(new Vector2(0, -50f), true);
 		controller = new KeyboardController();
 		contactListener = new GameContactListener();
 		stg = new Stage(new ScreenViewport());
 		debugRenderer = new Box2DDebugRenderer();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 32 , 32 ); 
+		camera.setToOrtho(false, Gdx.graphics.getWidth() / PPM, Gdx.graphics.getHeight() / PPM);
 		this.game = game;
 
 		Gdx.input.setInputProcessor(controller);
 		world.setContactListener(contactListener);
 		plazaTheme = AudioManager.getInstance().playMusic("music/Dr._Wily_Castle.mp3", true);
-
-		tiledMap = new TmxMapLoader().load("tilesmap/iglesiatmx.tmx");
-		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / PPM);
+		cargarTileMap();
 		crearCuerposDesdeTileMap();
-		
+
 		BodyFactory bodyFactory = BodyFactory.getInstance(world);
-		body = bodyFactory.makeBoxPolyBody(5, 5, 2, 2, BodyFactory.STEEL, BodyType.DynamicBody, true);
-		//bodyFactory.makeBoxPolyBody(0, -10, 50, 10, BodyFactory.STEEL, BodyType.StaticBody, false);
-		//entrada = bodyFactory.makeBoxPolyBody(10, 0, 4, 2, BodyFactory.STEEL, BodyType.StaticBody, false);
-		//entrada1 = bodyFactory.makeBoxPolyBody(4, 3, 4, 2, BodyFactory.STEEL, BodyType.StaticBody, false);
-		// bodyFactory.makeConeSensor(entrada, 5, "sensorCantunia");
-		// bodyFactory.makeConeSensor(entrada1, 5,"sensorAlmeida");
-		movimientoEstrategia = new Movimiento2D(controller, 5, 50);
+		body = bodyFactory.makeBoxPolyBody(1, 1, 32 / PPM, 64 / PPM, BodyFactory.STEEL, BodyType.DynamicBody, true);
+		movimientoEstrategia = new Movimiento2D(controller, 3, 2.5f);
 		personaje = new Cantunia(body, movimientoEstrategia);
 
 		body.setUserData("player");
@@ -94,71 +89,75 @@ public class AlmeidaState implements GameState {
 		stg.addActor(messageLabel);
 	}
 
+	private void cargarTileMap() {
+		tiledMap = new TmxMapLoader().load("tilesmap/iglesiatmx.tmx");
+		mapRenderer = new OrthogonalTiledMapRenderer(tiledMap, 1 / PPM);
+		MapProperties prop = tiledMap.getProperties();
+		mapWidth = prop.get("width", Integer.class) * prop.get("tilewidth", Integer.class) / PPM;
+		mapHeight = prop.get("height", Integer.class) * prop.get("tileheight", Integer.class) / PPM;
+	}
+
 	private void crearCuerposDesdeTileMap() {
-        MapLayer collisionLayer = tiledMap.getLayers().get("colisiones"); // Nombre de la capa de colisión
+		MapLayer collisionLayer = tiledMap.getLayers().get("colisiones"); // Nombre de la capa de colisión
 
-        if (collisionLayer == null) {
-            throw new IllegalArgumentException("La capa de colisión no existe en el tilemap");
-        }
+		if (collisionLayer == null) {
+			throw new IllegalArgumentException("La capa de colisión no existe en el tilemap");
+		}
 
-        for (MapObject object : collisionLayer.getObjects()) {
-            if (object instanceof RectangleMapObject) {
-                RectangleMapObject rectObject = (RectangleMapObject) object;
-                Rectangle rect = rectObject.getRectangle();
-                crearCuerpoDesdeRectangulo(rect);
-            }
-        }
-    }
-
-    private void crearCuerpoDesdeRectangulo(Rectangle rect) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-
-        float x = (rect.x + rect.width / 2) / PPM; // PPM: pixels per meter
-        float y = (rect.y + rect.height / 2) / PPM;
-        bodyDef.position.set(x, y);
-
-        Body body = world.createBody(bodyDef);
-
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(rect.width / 2 / PPM, rect.height / 2 / PPM);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.3f;
-
-        body.createFixture(fixtureDef);
-        shape.dispose();
-    }
+		for (MapObject object : collisionLayer.getObjects()) {
+			if (object instanceof RectangleMapObject) {
+				RectangleMapObject rectObject = (RectangleMapObject) object;
+				Rectangle rect = rectObject.getRectangle();
+				BodyFactory.getInstance(world).makeBoxCollision(rect, PPM);
+			}
+		}
+	}
 
 	
+
+	private void actualizarCamara() {
+		Vector2 position = body.getPosition();
+		float cameraX = Math.max(camera.viewportWidth / 2, Math.min(position.x, mapWidth - camera.viewportWidth / 2));
+		float cameraY = Math.max(camera.viewportHeight / 2,
+				Math.min(position.y, mapHeight - camera.viewportHeight / 2));
+		camera.position.set(cameraX, cameraY, 0);
+		camera.update();
+	}
+	
+	@Override
 	public void iniciar() {
 		Gdx.input.setInputProcessor(controller);
 	}
-
+	
 	@Override
 	public void update(float delta) {
 		// movimientoEstrategia.mover(body, delta);
 		personaje.mover(delta);
 		world.step(delta, 3, 3);
+		actualizarCamara();
 	}
 
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		// camera.position.set(personaje.getBody().getPosition().x,
+		// Gdx.graphics.getHeight() / PPM, 0);
 		camera.update();
-		debugRenderer.render(world, camera.combined);
+
 		mapRenderer.setView(camera);
 		mapRenderer.render();
-		camera.position.set(personaje.getBody().getPosition().x, personaje.getBody().getPosition().y, 0);
-		camera.update();
+
+		debugRenderer.render(world, camera.combined);
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			paused = !paused;
 			togglePause();
 			paused = !paused;
 		}
+	}
+
+	@Override
+	public void setPlayerPosition(float x, float y) {
+		body.setTransform(x, y, body.getAngle());
 	}
 
 	@Override
@@ -169,6 +168,7 @@ public class AlmeidaState implements GameState {
 
 	@Override
 	public void resize(int width, int height) {
+		camera.setToOrtho(false, width / PPM, height / PPM);
 		stg.getViewport().update(width, height, true);
 	}
 
@@ -179,5 +179,17 @@ public class AlmeidaState implements GameState {
 		} else {
 			plazaTheme.play();
 		}
+	}
+
+	@Override
+	public String getLevelName() {
+		// TODO Auto-generated method stub
+		return "Almeida";
+	}
+
+	@Override
+	public Vector2 getPlayerPosition() {
+		// TODO Auto-generated method stub
+		return body.getPosition();
 	}
 }

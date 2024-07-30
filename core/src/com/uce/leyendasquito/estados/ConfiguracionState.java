@@ -2,6 +2,7 @@ package com.uce.leyendasquito.estados;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -152,6 +153,24 @@ public class ConfiguracionState implements GameState{
 	@Override
 	public void resize(int width, int height) {
 		stg.getViewport().update(width, height, true);
+	}
+
+	@Override
+	public String getLevelName() {
+		// TODO Auto-generated method stub
+		return "Configuracion";
+	}
+
+	@Override
+	public Vector2 getPlayerPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPlayerPosition(float x, float y) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.uce.leyendasquito.utils;
 
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BodyFactory {
@@ -33,11 +35,7 @@ public class BodyFactory {
 		return thisInstance;
 	}
 
-//	public Body makeBoxPolyBody(float posx, float posy, float width, float height,int material, BodyType bodyType){
-//		return makeBoxPolyBody(posx, posy, width, height, material, bodyType, false);
-//	}
-
-	static public FixtureDef makeFixture(int material, com.badlogic.gdx.physics.box2d.Shape shape) {
+	static public FixtureDef makeFixture(int material, Shape shape) {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;
 		switch (material) {
@@ -92,6 +90,7 @@ public class BodyFactory {
 		// create a definition
 		BodyDef boxBodyDef = new BodyDef();
 		boxBodyDef.type = bodyType;
+		
 		boxBodyDef.position.x = posx;
 		boxBodyDef.position.y = posy;
 		boxBodyDef.fixedRotation = fixedRotation;
@@ -99,13 +98,36 @@ public class BodyFactory {
 		// create the body to attach said definition
 		Body boxBody = world.createBody(boxBodyDef);
 		PolygonShape poly = new PolygonShape();
+		
 		poly.setAsBox(width / 2, height / 2);
 		boxBody.createFixture(makeFixture(material, poly));
 		poly.dispose();
 
 		return boxBody;
 	}
+	
+	public void makeBoxCollision(Rectangle rect, float PPM) {
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.type = BodyDef.BodyType.StaticBody;
 
+		float x = (rect.x + rect.width / 2) / PPM; // PPM: pixels per meter
+		float y = (rect.y + rect.height / 2) / PPM;
+		bodyDef.position.set(x, y);
+
+		Body body = world.createBody(bodyDef);
+		PolygonShape shape = new PolygonShape();
+		
+		shape.setAsBox(rect.width / 2 / PPM, rect.height / 2 / PPM);
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.5f;
+		fixtureDef.restitution = 0.3f;
+
+		body.createFixture(fixtureDef);
+		shape.dispose();
+	}
+	
 	public void makeConeSensor(Body body, float size, String userData) {
 
 		FixtureDef fixtureDef = new FixtureDef();
@@ -117,7 +139,7 @@ public class BodyFactory {
         Vector2[] vertices = new Vector2[5];
         vertices[0] = new Vector2(0, 0);
         for (int i = 2; i < 6; i++) {
-            float angle = (float) (i / 6.0 * 145 * MathUtils.degreesToRadians); // Convierte grados a radianes
+            float angle = (float) ((((i -1)/ 3.0 * 90)+200) * MathUtils.degreesToRadians); // Convierte grados a radianes
             vertices[i - 1] = new Vector2(radius * MathUtils.cos(angle), radius * MathUtils.sin(angle));
         }
         polygon.set(vertices);
